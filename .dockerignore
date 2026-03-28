@@ -1,0 +1,7 @@
+node_modules
+dist
+coverage
+.git
+.beads
+ingredient.db
+npm-debug.log*

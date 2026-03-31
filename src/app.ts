@@ -1,4 +1,5 @@
 import { randomUUID } from "node:crypto";
+import { join } from "node:path";
 import {
   type H3Event,
   createApp,
@@ -30,6 +31,7 @@ import {
   updateSection,
   type IngredientWithAliases
 } from "./db/repositories";
+import { mountStaticFiles } from "./static";
 
 type CreateIngredientAppOptions = {
   getDb?: () => IngredientDb;
@@ -60,6 +62,9 @@ type IngredientApiModel = {
 export function createIngredientApp(options: CreateIngredientAppOptions = {}) {
   const app = createApp();
   const getDb = options.getDb ?? (() => getDbConnection().db);
+
+  const publicDir = join(__dirname, "public");
+  mountStaticFiles(app, publicDir);
 
   app.get(
     "/health",

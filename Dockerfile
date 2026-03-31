@@ -7,6 +7,7 @@ RUN npm ci
 
 COPY tsconfig.json ./
 COPY src ./src
+COPY client ./client
 COPY drizzle ./drizzle
 
 RUN npm run build

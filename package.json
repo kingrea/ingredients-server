@@ -5,7 +5,8 @@
   "description": "Ingredient database API",
   "scripts": {
     "dev": "tsx watch src/server.ts",
-    "build": "tsc -p tsconfig.json",
+    "build": "tsc -p tsconfig.json && npm run build:client",
+    "build:client": "cd client && npx vite build",
     "start": "node dist/server.js",
     "lint": "eslint . --ext .ts",
     "typecheck": "tsc --noEmit",
@@ -38,6 +39,7 @@
     "prettier": "^3.5.3",
     "tsx": "^4.19.4",
     "typescript": "^5.8.3",
+    "vite": "^7.3.1",
     "vitest": "^3.1.1"
   }
 }

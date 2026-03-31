@@ -3,7 +3,6 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: ingredient-db:latest
     container_name: ingredient-db
     restart: unless-stopped
     ports:

@@ -7,6 +7,7 @@ import {
   getQuery,
   getRouterParam,
   readBody,
+  setResponseHeader,
   setResponseStatus
 } from "h3";
 import { sendApiError } from "./api-error";
@@ -31,6 +32,7 @@ import {
   updateSection,
   type IngredientWithAliases
 } from "./db/repositories";
+import { openApiSpec } from "./openapi";
 import { mountStaticFiles } from "./static";
 
 type CreateIngredientAppOptions = {
@@ -70,6 +72,32 @@ export function createIngredientApp(options: CreateIngredientAppOptions = {}) {
     "/health",
     eventHandler(() => {
       return { status: "ok" };
+    })
+  );
+
+  app.get(
+    "/api/openapi.json",
+    eventHandler(() => {
+      return openApiSpec;
+    })
+  );
+
+  app.get(
+    "/docs",
+    eventHandler((event) => {
+      setResponseHeader(event, "content-type", "text/html; charset=utf-8");
+      return `<!doctype html>
+<html>
+<head>
+  <title>Ingredient DB - API Docs</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+</head>
+<body>
+  <script id="api-reference" data-url="/api/openapi.json"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@scalar/api-reference"></script>
+</body>
+</html>`;
     })
   );
 
